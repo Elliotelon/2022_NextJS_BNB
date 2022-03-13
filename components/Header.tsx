@@ -65,6 +65,14 @@ const Header: React.FC = () => {
           <AirbnbLogoTextIcon />
         </a>
       </Link>
+      <div className="header-auth-buttons">
+        <button type="button" className="header-sign-up-button">
+          회원가입
+        </button>
+        <button type="button" className="header-login-button">
+          로그인
+        </button>
+      </div>
     </Container>
   );
 };
