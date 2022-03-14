@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: ["airbnb"],
   globals: {
+    JSX: true,
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
   },
