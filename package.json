@@ -10,9 +10,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-styled-components": "^2.0.6",
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "next": "^12.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
