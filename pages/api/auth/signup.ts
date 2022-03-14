@@ -41,14 +41,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     await new Promise((resolve) => {
       const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
+      const expires = 60 * 60 * 24 * 3;
       res.setHeader(
         "Set-Cookie",
-        `access_token=${token}; path=/; httponly`
+        `access_token=${token}; max-age=${expires}; path=/; httponly`
       );
       resolve(token);
     });
-    return res.end();
+    const newUserWithoutPassword: Partial<
+      Pick<StoredUserType, "password">
+    > = newUser;
+
+    delete newUserWithoutPassword.password;
+    res.statusCode = 200;
+    return res.send(newUser);
   }
+
   res.statusCode = 405;
   return res.end();
 };
