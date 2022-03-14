@@ -5,8 +5,10 @@ import {
   useSelector as useReduxSelector,
 } from "react-redux";
 import user from "./user";
+import common from "./common";
 
 const rootReducer = combineReducers({
+  common: common.reducer,
   user: user.reducer,
 });
 
