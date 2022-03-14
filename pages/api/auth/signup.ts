@@ -39,8 +39,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     Data.user.write([...users, newUser]);
 
-    const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
-
+    await new Promise((resolve) => {
+      const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
+      res.setHeader(
+        "Set-Cookie",
+        `access_token=${token}; path=/; httponly`
+      );
+      resolve(token);
+    });
     return res.end();
   }
   res.statusCode = 405;
