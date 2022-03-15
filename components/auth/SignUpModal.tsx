@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
+import { authActions } from "../../store/auth";
 
 const Container = styled.form`
   width: 568px;
@@ -216,6 +217,11 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
     }
   };
 
+  //* 로그인 모달로 변경하기
+  const changeToLoginModal = () => {
+    dispatch(authActions.setAuthMode("login"));
+  };
+
   useEffect(() => {
     return () => {
       setValidateMode(false);
@@ -341,7 +347,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
         <span
           className="sign-up-modal-set-login"
           role="presentation"
-          onClick={() => {}}
+          onClick={changeToLoginModal}
         >
           로그인
         </span>
