@@ -9,6 +9,7 @@ import palette from "../../styles/palette";
 import Button from "../common/Button";
 import Input from "../common/Input";
 import { authActions } from "../../store/auth";
+import { loginAPI } from "../../lib/api/auth";
 
 const Container = styled.form`
   width: 568px;
@@ -75,8 +76,25 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
     dispatch(authActions.setAuthMode("signup"));
   };
 
+  //* 로그인 클릭시
+  const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 입력해 주세요.");
+    } else {
+      const loginBody = { email, password };
+
+      try {
+        const { data } = await loginAPI(loginBody);
+        console.log(data);
+      } catch (e: any) {
+        console.log(e.response);
+      }
+    }
+  };
+
   return (
-    <Container>
+    <Container onSubmit={onSubmitLogin}>
       <CloseXIcon className="modal-close-x-icon" onClick={closeModal} />
       <div className="login-input-wrapper">
         <Input
