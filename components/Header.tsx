@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import SignUpModal from "./auth/SignUpModal";
 import AirbnbLogoIcon from "../public/static/svg/logo/logo.svg";
 import AirbnbLogoTextIcon from "../public/static/svg/logo/logo_text.svg";
 import HamburgerIcon from "../public/static/svg/header/hamburger.svg";

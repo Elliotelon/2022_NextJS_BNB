@@ -9,6 +9,7 @@ import palette from "../../styles/palette";
 import Button from "../common/Button";
 import Input from "../common/Input";
 import { authActions } from "../../store/auth";
+import useValidateMode from "../../hooks/useValidateMode";
 import { loginAPI } from "../../lib/api/auth";
 
 const Container = styled.form`
@@ -55,6 +56,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
   const [password, setPassword] = useState("");
   const [isPasswordHided, setIsPasswordHided] = useState(true);
   const dispatch = useDispatch();
+  const { setValidateMode } = useValidateMode();
 
   //*비밀번호 숨김 토글하기
   const togglePasswordHiding = () => {
@@ -79,6 +81,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
   //* 로그인 클릭시
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setValidateMode(true);
     if (!email || !password) {
       alert("이메일과 비밀번호를 입력해 주세요.");
     } else {
@@ -104,9 +107,9 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
           icon={<MailIcon />}
           value={email}
           onChange={onChangeEmail}
-          isValid={undefined}
+          isValid={email !== ""}
           useValidation={undefined}
-          errorMessage={undefined}
+          errorMessage="이메일이 필요합니다."
         />
       </div>
       <div className="login-input-wrapper login-password-input-wrapper">
@@ -122,9 +125,9 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
           }
           value={password}
           onChange={onChangePassword}
-          isValid={undefined}
+          isValid={password !== ""}
           useValidation={undefined}
-          errorMessage={undefined}
+          errorMessage="비밀번호를 입력하세요."
         />
       </div>
       <div className="login-modal-submit-button-wrapper">
