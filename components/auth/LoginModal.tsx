@@ -11,6 +11,7 @@ import Input from "../common/Input";
 import { authActions } from "../../store/auth";
 import useValidateMode from "../../hooks/useValidateMode";
 import { loginAPI } from "../../lib/api/auth";
+import { userActions } from "../../store/user";
 
 const Container = styled.form`
   width: 568px;
@@ -89,12 +90,19 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
 
       try {
         const { data } = await loginAPI(loginBody);
-        console.log(data);
+        dispatch(userActions.setLoggedUser(data));
+        closeModal();
       } catch (e: any) {
         console.log(e.response);
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
 
   return (
     <Container onSubmit={onSubmitLogin}>
