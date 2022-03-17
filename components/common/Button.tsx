@@ -1,10 +1,38 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import palette from "../../styles/palette";
+
+//* 버튼 색상 구하기
+const getButtonColor = (color: string) => {
+  switch (color) {
+    case "dark_cyan":
+      return css`
+        background-color: ${palette.dark_cyan};
+        color: white;
+      `;
+    case "bittersweet":
+      return css`
+        background-color: ${palette.bittersweet};
+        color: white;
+      `;
+    case "amaranth":
+      return css`
+        background-color: ${palette.amaranth};
+        color: white;
+      `;
+    default:
+      return css`
+        background-color: white;
+        color: ${palette.black};
+        border: 1px solid ${palette.gray_c4};
+      `;
+  }
+};
 
 const Container = styled.button`
   width: 100%;
   height: 48px;
+  padding: 0 15px;
   border: 0;
   border-radius: 4px;
   background-color: ${palette.bittersweet};
@@ -13,14 +41,15 @@ const Container = styled.button`
   font-weight: 800;
   outline: none;
   cursor: pointer;
+  ${(props) => getButtonColor(props.color || "")}
 `;
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-const Button: React.FC<IProps> = ({ children, ...props }) => {
-  return <Container {...props}>{children}</Container>;
+const Button: React.FC<IProps> = ({ children, color, ...props }) => {
+  return <Container {...props} color={color}>{children}</Container>;
 };
 
 export default React.memo(Button);
