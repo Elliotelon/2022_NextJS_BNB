@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import PasswordWarning from "./PasswordWarning";
@@ -103,35 +103,15 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
   const { setValidateMode } = useValidateMode();
   const [passwordFocused, setPasswordFocused] = useState(false);
 
-  //* 이메일 주소 변경시
-  const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  //* 성 변경시
-  const onChangeLastname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastname(event.target.value);
-  };
-
-  //* 이름 변경시
-  const onChangeFirstname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstname(event.target.value);
-  };
-
-  //* 비밀번호 변경시
-  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  //*비밀번호 숨김 토글
-  const toggleHidePassword = () => {
+  //*비밀번호 숨김 토글하기
+  const toggleHidePassword = useCallback(() => {
     setHidePassword(!hidePassword);
-  };
+  }, [hidePassword]);
 
   //* 비밀번호 인풋 포커스 되었을때
-  const onFocusPassword = () => {
+  const onFocusPassword = useCallback(() => {
     setPasswordFocused(true);
-  };
+  }, []);
 
   //* password가 이름이나 이메일을 포함하는지
   const isPasswordHasNameOrEmail = useMemo(
@@ -159,20 +139,61 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
     [password]
   );
 
-  //* 생년월일 년 변경시
-  const onChangeBirthYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBirthYear(event.target.value);
-  };
+  //* 이메일 주소 변경시
+  const onChangeEmail = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value);
+    },
+    []
+  );
+
+  //* 이름 주소 변경시
+  const onChangeLastname = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setLastname(event.target.value);
+    },
+    []
+  );
+
+  //* 성 변경시
+  const onChangeFirstname = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFirstname(event.target.value);
+    },
+    []
+  );
+
+  //* 비밀번호 변경시
+  const onChangePassword = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(event.target.value);
+    },
+    []
+  );
 
   //* 생년월일 월 변경시
-  const onChangeBirthMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBirthMonth(event.target.value);
-  };
+  const onChangeBirthMonth = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setBirthMonth(event.target.value);
+    },
+    []
+  );
 
   //* 생년월일 일 변경시
-  const onChangeBirthDay = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBirthDay(event.target.value);
-  };
+  const onChangeBirthDay = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setBirthDay(event.target.value);
+    },
+    []
+  );
+
+  //* 생년월일 년 변경시
+  const onChangeBirthYear = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setBirthYear(event.target.value);
+    },
+    []
+  );
 
   //* 회원가입 폼 입력 값 확인하기
   const validateSignUpForm = () => {
