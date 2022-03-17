@@ -10,21 +10,10 @@ const getButtonColor = (color: string) => {
         background-color: ${palette.dark_cyan};
         color: white;
       `;
-    case "bittersweet":
+    default:
       return css`
         background-color: ${palette.bittersweet};
         color: white;
-      `;
-    case "amaranth":
-      return css`
-        background-color: ${palette.amaranth};
-        color: white;
-      `;
-    default:
-      return css`
-        background-color: white;
-        color: ${palette.black};
-        border: 1px solid ${palette.gray_c4};
       `;
   }
 };
@@ -49,7 +38,11 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<IProps> = ({ children, color, ...props }) => {
-  return <Container {...props} color={color}>{children}</Container>;
+  return (
+    <Container {...props} color={color}>
+      {children}
+    </Container>
+  );
 };
 
 export default React.memo(Button);
