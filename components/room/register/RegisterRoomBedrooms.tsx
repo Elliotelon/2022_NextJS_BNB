@@ -5,6 +5,9 @@ import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import Counter from "../../common/Counter";
+import { getNumber } from "../../../lib/utils";
+import Selector from "../../common/Selector";
+import { bedroomCountList } from "../../../lib/staticData";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -31,18 +34,39 @@ const Container = styled.div`
     width: 320px;
     margin-bottom: 32px;
   }
+  .register-room-bedroom-count-wrapper {
+    width: 320px;
+    margin-bottom: 32px;
+  }
+  .register-room-bed-count-wrapper {
+    width: 320px;
+    margin-bottom: 50px;
+  }
 `;
 
 const RegisterRoomBedroom: React.FC = () => {
+  const dispatch = useDispatch();
+
   const maximumGuestCount = useSelector(
     (state) => state.registerRoom.maximumGuestCount
   );
-  const dispatch = useDispatch();
+  const bedroomCount = useSelector((state) => state.registerRoom.bedroomCount);
+  const bedCount = useSelector((state) => state.registerRoom.bedCount);
 
   //* 최대 숙박 인원 변경시
   const onChangeMaximumGuestCount = (value: number) => {
     dispatch(registerRoomActions.setMaximumGuestCount(value));
   };
+
+  //* 침실 갯수 변경시
+  const onChangeBedroomCount = (event: React.ChangeEvent<HTMLSelectElement>) =>
+    dispatch(
+      registerRoomActions.setBedroomCount(getNumber(event.target.value) || 0)
+    );
+
+  //* 침대 갯수 변경시
+  const onChangeBedCount = (value: number) =>
+    dispatch(registerRoomActions.setBedCount(value));
 
   return (
     <Container>
@@ -58,6 +82,18 @@ const RegisterRoomBedroom: React.FC = () => {
           value={maximumGuestCount}
           onChange={onChangeMaximumGuestCount}
         />
+      </div>
+      <div className="register-room-bedroom-count-wrapper">
+        <Selector
+          type="register"
+          value={`침실 ${bedroomCount}개`}
+          onChange={onChangeBedroomCount}
+          label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
+          options={bedroomCountList}
+        />
+      </div>
+      <div className="register-room-bed-count-wrapper">
+        <Counter label="침대" value={bedCount} onChange={onChangeBedCount} />
       </div>
     </Container>
   );
